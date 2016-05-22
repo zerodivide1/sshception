@@ -31,3 +31,17 @@ if [[ $TUNNEL_HOST == *":"* ]] ; then
   TUNNEL_PORT=$(echo $TUNNEL_HOST | cut -d':' -f2)
   TUNNEL_HOST=$(echo $TUNNEL_HOST | cut -d':' -f1)
 fi
+
+TARGET_HOST=$2
+TARGET_USERNAME=
+TARGET_PORT=$DEFAULT_SSH_PORT
+
+if [[ $TARGET_HOST == *"@"* ]] ; then
+  TARGET_USERNAME=$(echo $TARGET_HOST | cut -d'@' -f1)
+  TARGET_HOST=$(echo $TARGET_HOST | cut -d'@' -f2)
+fi
+
+if [[ $TARGET_HOST == *":"* ]] ; then
+  TARGET_PORT=$(echo $TARGET_HOST | cut -d':' -f2)
+  TARGET_HOST=$(echo $TARGET_HOST | cut -d':' -f1)
+fi
