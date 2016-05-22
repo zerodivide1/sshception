@@ -67,7 +67,7 @@ if [[ $TARGET_HOST == *":"* ]] ; then
 fi
 
 TUNNELING_PORT=$(generateRandomPort)
-[ ! -z "$BRIDGE_PORT" ] || failOut "Unable to find a random tunneling port"
+[ ! -z "$TUNNELING_PORT" ] || failOut "Unable to find a random tunneling port"
 
 CTL_SOCKET_UUID=$(uuidgen)
 [ ! -z "$CTL_SOCKET_UUID" ] || failOut "Unable to generate a UUID for the tunnel connection"
