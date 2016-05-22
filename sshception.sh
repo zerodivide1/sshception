@@ -13,8 +13,8 @@ failOut() {
   exit -1
 }
 
-[ -z "$1" ] || failOut "You must specify the SSH tunnel host"
-[ -z "$2" ] || failOut "You must specify the target host"
+[ ! -z "$1" ] || failOut "You must specify the SSH tunnel host"
+[ ! -z "$2" ] || failOut "You must specify the target host"
 
 TUNNEL_USERNAME=$(echo $1 | cut -d'@' -f1)
 TUNNEL_HOST=$(echo $1 | cut -d'@' -f2 | cut -d':' -f1)
