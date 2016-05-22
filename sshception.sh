@@ -90,6 +90,6 @@ fi
 (ssh -M -S $CTL_SOCKET_UUID -fnNT -L $TUNNELING_PORT:$TARGET_HOST:$TARGET_PORT $TUNNEL_CONNECTION_STRING -p $TUNNEL_PORT && \
   echo $CTL_SOCKET_UUID >> ~/.ssh/open_connections
   ssh -S $CTL_SOCKET_UUID -O check $TUNNEL_CONNECTION_STRING && \
-  ssh $TARGET_CONNECTION_STRING -p $TUNNELING_PORT && \
+  ssh $TARGET_USERNAME@localhost -p $TUNNELING_PORT && \
   ssh -S $CTL_SOCKET_UUID -O exit $TUNNEL_CONNECTION_STRING && \
   sed -i.bak "/$CTL_SOCKET_UUID/d" ~/.ssh/open_connections) || failOut "Unable to establish tunnel. Verify the tunnel isn't still open in ~/.ssh/open_connections"
