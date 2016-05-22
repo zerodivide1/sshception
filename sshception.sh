@@ -65,3 +65,6 @@ if [[ $TARGET_HOST == *":"* ]] ; then
   TARGET_PORT=$(echo $TARGET_HOST | cut -d':' -f2)
   TARGET_HOST=$(echo $TARGET_HOST | cut -d':' -f1)
 fi
+
+TUNNELING_PORT=$(generateRandomPort)
+[ ! -z "$BRIDGE_PORT" ] || failOut "Unable to find a random tunneling port"
