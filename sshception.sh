@@ -25,7 +25,7 @@ PORTHI=65535
 
 generateRandomPort() {
   POTENTIAL_PORT=$($SHUFCMD -i $PORTLO-$PORTHI -n1)
-  while true ; do
+  for i in $(seq 1 100) ; do
     if [ -z "$(lsof -i :$POTENTIAL_PORT)" ] ; then
       echo $POTENTIAL_PORT
       break
