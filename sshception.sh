@@ -13,6 +13,26 @@ failOut() {
   exit -1
 }
 
+SHUFCMD=$(which shuf)
+if [ -z "$SHUFCMD" ] ; then
+  # Maybe we're running on OSX with the Homebrew-installed 'coreutils'?
+  SHUFCMD=$(which gshuf)
+  [ ! -z "$SHUFCMD" ] || failOut "No 'shuf' command found"
+fi
+
+PORTLO=1024
+PORTHI=65535
+
+generateRandomPort() {
+  POTENTIAL_PORT=$($SHUFCMD -i $PORTLO-$PORTHI -n1)
+  while true ; do
+    if [ -z "$(lsof -i :$POTENTIAL_PORT)" ] ; then
+      echo $POTENTIAL_PORT
+      break
+    fi
+  done
+}
+
 DEFAULT_SSH_PORT=22
 
 [ ! -z "$1" ] || failOut "You must specify the SSH tunnel host"
