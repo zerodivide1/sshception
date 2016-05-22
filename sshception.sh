@@ -13,13 +13,21 @@ failOut() {
   exit -1
 }
 
+DEFAULT_SSH_PORT=22
+
 [ ! -z "$1" ] || failOut "You must specify the SSH tunnel host"
 [ ! -z "$2" ] || failOut "You must specify the target host"
 
-TUNNEL_USERNAME=$(echo $1 | cut -d'@' -f1)
-TUNNEL_HOST=$(echo $1 | cut -d'@' -f2 | cut -d':' -f1)
-TUNNEL_PORT=$(echo $1 | cut -d'@' -f2 | cut -d':' -f2)
+TUNNEL_HOST=$1
+TUNNEL_USERNAME=
+TUNNEL_PORT=$DEFAULT_SSH_PORT
 
-TARGET_USERNAME=$(echo $2 | cut -d'@' -f1)
-TARGET_HOST=$(echo $2 | cut -d'@' -f2 | cut -d':' -f1)
-TARGET_PORT=$(echo $2 | cut -d'@' -f2 | cut -d':' -f2)
+if [[ $TUNNEL_HOST == *"@"* ]] ; then
+  TUNNEL_USERNAME=$(echo $TUNNEL_HOST | cut -d'@' -f1)
+  TUNNEL_HOST=$(echo $TUNNEL_HOST | cut -d'@' -f2)
+fi
+
+if [[ $TUNNEL_HOST == *":"* ]] ; then
+  TUNNEL_PORT=$(echo $TUNNEL_HOST | cut -d':' -f2)
+  TUNNEL_HOST=$(echo $TUNNEL_HOST | cut -d':' -f1)
+fi
